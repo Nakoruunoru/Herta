@@ -91,6 +91,7 @@
     .qris-section img {
       max-width: 200px;
       margin-bottom: 20px;
+      cursor: pointer;
     }
 
     .qris-section a {
@@ -120,6 +121,24 @@
   <script>
     function showQRIS() {
       document.getElementById('qris-section').style.display = 'block';
+    }
+
+    // Function to download the QRIS image
+    function downloadQRIS() {
+      var link = document.createElement('a');
+      link.href = 'https://pomf2.lain.la/f/kygm7jgp.png'; // QRIS Image URL
+      link.download = 'qris.png'; // Name of the downloaded file
+      link.click();
+    }
+
+    // Function to enlarge the QRIS image
+    function enlargeQRIS() {
+      var img = document.getElementById('qris-img');
+      if (img.style.maxWidth === '200px') {
+        img.style.maxWidth = '500px'; // Enlarges the image
+      } else {
+        img.style.maxWidth = '200px'; // Resets the size
+      }
     }
   </script>
 </head>
@@ -184,8 +203,9 @@
     <!-- QRIS Section -->
     <div id="qris-section" class="qris-section">
       <h3>Scan QRIS untuk Pembayaran</h3>
-      <img src="https://pomf2.lain.la/f/kygm7jgp.png" alt="QRIS">
-      <a href="https://wa.me/18148012005" target="_blank">Kirim Bukti Pembayaran</a>
+      <img src="https://pomf2.lain.la/f/kygm7jgp.png" alt="QRIS" id="qris-img" onclick="enlargeQRIS()">
+      <a href="https://wa.me/18148012005" target="_blank">Kirim Bukti Pembayaran</a><br>
+      <button onclick="downloadQRIS()">Download QRIS</button>
     </div>
   </div>
 </body>
