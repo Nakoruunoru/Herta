@@ -1,3 +1,6 @@
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -91,7 +94,6 @@
     .qris-section img {
       max-width: 200px;
       margin-bottom: 20px;
-      cursor: pointer;
     }
 
     .qris-section a {
@@ -109,20 +111,18 @@
       background-color: #21a1f1;
     }
 
-    /* Red Button Styling */
-    
+    /* Additional Styling for Image */
+    .intro-image {
+      max-width: 100%;
+      height: auto;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    }
   </style>
   <script>
     function showQRIS() {
       document.getElementById('qris-section').style.display = 'block';
-    }
-
-    // Function to download the QRIS image
-    function downloadQRIS() {
-      var link = document.createElement('a');
-      link.href = 'https://pomf2.lain.la/f/kygm7jgp.png'; // QRIS Image URL
-      link.download = 'qris.png'; // Name of the downloaded file
-      link.click();
     }
   </script>
 </head>
@@ -187,10 +187,8 @@
     <!-- QRIS Section -->
     <div id="qris-section" class="qris-section">
       <h3>Scan QRIS untuk Pembayaran</h3>
-      <img src="https://pomf2.lain.la/f/kygm7jgp.png" alt="QRIS" id="qris-img">
-      <a href="https://wa.me/18148012005" target="_blank">Kirim Bukti Pembayaran</a><br>
-      <button onclick="downloadQRIS()">Download QRIS</button><br>
-      <a href="#" class="red-button">Red Button</a> <!-- New Red Button -->
+      <img src="https://pomf2.lain.la/f/kygm7jgp.png" alt="QRIS">
+      <a href="https://wa.me/18148012005" target="_blank">Kirim Bukti Pembayaran</a>
     </div>
   </div>
 </body>
