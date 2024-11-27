@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Penjualan Panel</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #1e1e2f;
+      color: #ffffff;
+    }
+
+    /* Header Styling */
+    .header {
+      background-color: #252526;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header h1 {
+      color: #61dafb;
+      font-size: 36px;
+      margin: 0;
+    }
+
+    /* Main Section */
+    .main {
+      text-align: center;
+      margin: 20px;
+      padding: 20px;
+    }
+
+    .main h2 {
+      font-size: 28px;
+      margin-bottom: 20px;
+    }
+
+    /* Panel List */
+    .panel-list {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-item {
+      width: 90%;
+      max-width: 500px;
+      background-color: #2d2d3d;
+      padding: 15px;
+      border-radius: 8px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .panel-item span {
+      font-size: 18px;
+      color: #d4d4d4;
+    }
+
+    .panel-item button {
+      padding: 8px 16px;
+      font-size: 16px;
+      background-color: #61dafb;
+      color: #1e1e2f;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .panel-item button:hover {
+      background-color: #21a1f1;
+    }
+
+    /* QRIS Section */
+    .qris-section {
+      margin-top: 30px;
+      display: none; /* Initially hidden */
+      text-align: center;
+    }
+
+    .qris-section img {
+      max-width: 200px;
+      margin-bottom: 20px;
+    }
+
+    .qris-section a {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #61dafb;
+      color: #1e1e2f;
+      text-decoration: none;
+      border-radius: 5px;
+      transition: 0.3s;
+    }
+
+    .qris-section a:hover {
+      background-color: #21a1f1;
+    }
+
+    /* Additional Styling for Image */
+    .intro-image {
+      max-width: 100%;
+      height: auto;
+      margin: 20px 0;
+      border-radius: 10px;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    }
+  </style>
+  <script>
+    function showQRIS() {
+      document.getElementById('qris-section').style.display = 'block';
+    }
+  </script>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1>Herta - Panel</h1>
+  </div>
+
+  <!-- Main Section -->
+  <div class="main">
+    <h2>List Panel</h2>
+
+    <!-- Intro Image -->
+    <img src="https://pomf2.lain.la/f/oa67rm90.png" alt="Intro Image" class="intro-image">
+
+    <!-- Panel List -->
+    <div class="panel-list">
+      <!-- Looping Panel Items -->
+      <div class="panel-item">
+        <span>1 GB Panel - Rp 1.000</span>
+        <button onclick="showQRIS()">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>2 GB Panel - Rp 2.000</span>
+        <button onclick="showQRIS()">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>3 GB Panel - Rp 3.000</span>
+        <button onclick="showQRIS()">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>4 GB Panel - Rp 4.000</span>
+        <button onclick="showQRIS()">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>5 GB Panel - Rp 5.000</span>
+        <button onclick="showQRIS()">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>6 GB Panel - Rp 6.000</span>
+        <button onclick="showQRIS()">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>7 GB Panel - Rp 7.000</span>
+        <button onclick="showQRIS()">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>8 GB Panel - Rp 8.000</span>
+        <button onclick="showQRIS()">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>9 GB Panel - Rp 9.000</span>
+        <button onclick="showQRIS()">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>Unlimited Panel - Rp 10.000</span>
+        <button onclick="showQRIS()">Beli</button>
+      </div>
+    </div>
+
+    <!-- QRIS Section -->
+    <div id="qris-section" class="qris-section">
+      <h3>Scan QRIS untuk Pembayaran</h3>
+      <img src="https://pomf2.lain.la/f/m48kcvbi.jpg" alt="QRIS">
+      <a href="https://wa.me/123456789" target="_blank">Kirim Bukti Pembayaran</a>
+    </div>
+  </div>
+</body>
+</html>
