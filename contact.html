@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Contact - Herta Bot WhatsApp</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', Courier, monospace;
+      background-color: #1e1e2f;
+      color: #ffffff;
+    }
+
+    /* Header Styling */
+    .header {
+      background-color: #252526;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+    }
+
+    .header h1 {
+      color: #61dafb;
+      font-size: 36px;
+      margin: 0;
+    }
+
+    .nav {
+      display: flex;
+      justify-content: center;
+      margin-top: 10px;
+      gap: 20px;
+    }
+
+    .nav a {
+      color: #d4d4d4;
+      text-decoration: none;
+      font-size: 18px;
+      transition: 0.3s;
+    }
+
+    .nav a:hover {
+      color: #61dafb;
+    }
+
+    /* Contact Section */
+    .main {
+      text-align: center;
+      padding: 40px 20px;
+      max-width: 800px;
+      margin: auto;
+    }
+
+    .main h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+    }
+
+    .contact-card {
+      background-color: #252526;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+    }
+
+    .contact-card img {
+      width: 50px;
+      height: 50px;
+    }
+
+    .contact-card .details {
+      text-align: left;
+    }
+
+    .contact-card h3 {
+      color: #61dafb;
+      font-size: 24px;
+      margin: 0 0 10px;
+    }
+
+    .contact-card p {
+      font-size: 16px;
+      color: #d4d4d4;
+      margin: 5px 0;
+    }
+
+    .contact-card a {
+      color: #61dafb;
+      text-decoration: none;
+      font-weight: bold;
+      transition: color 0.3s;
+    }
+
+    .contact-card a:hover {
+      color: #007acc;
+    }
+
+    .footer {
+      margin-top: 50px;
+      text-align: center;
+      color: #d4d4d4;
+      font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+  <!-- Header -->
+  <div class="header">
+    <h1>Contact Us</h1>
+    <div class="nav">
+      <a href="index.html">Home</a>
+      <a href="f.html">Features</a>
+      <a href="about.html">About</a>
+    </div>
+  </div>
+
+  <!-- Main Section -->
+  <div class="main">
+    <h2>Hubungi Kami</h2>
+
+    <!-- WhatsApp -->
+    <div class="contact-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp Logo">
+      <div class="details">
+        <h3>WhatsApp</h3>
+        <p>Grup WhatsApp: <a href="https://chat.whatsapp.com/ExampleGroup" target="_blank">Join di Sini</a></p>
+        <p>Saluran WhatsApp: <a href="https://wa.me/123456789" target="_blank">Klik di Sini</a></p>
+      </div>
+    </div>
+
+    <!-- Email -->
+    <div class="contact-card">
+      <img src="gmail.svg" alt="Email Logo">
+      <div class="details">
+        <h3>Email</h3>
+        <p>Email Resmi: <a href="mailto:support@hertabot.com">support@hertabot.com</a></p>
+      </div>
+    </div>
+
+    <!-- Phone -->
+    <div class="contact-card">
+      <img src="phone.svg" alt="Phone Logo">
+      <div class="details">
+        <h3>Nomor Bot</h3>
+        <p><a href="tel:+123456789">+123456789</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <div class="footer">
+    <p>&copy; 2024 Herta Bot. All rights reserved.</p>
+  </div>
+</body>
+</html>
