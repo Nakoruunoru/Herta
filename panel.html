@@ -109,13 +109,63 @@
       background-color: #21a1f1;
     }
 
-    /* Additional Styling for Image */
-    .intro-image {
-      max-width: 100%;
+    /* Red Button Styling */
+    .qris-section .red-button {
+      display: inline-block;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #ff4c4c;
+      color: #ffffff;
+      text-decoration: none;
+      border-radius: 5px;
+      margin-top: 10px;
+      transition: 0.3s;
+    }
+
+    .qris-section .red-button:hover {
+      background-color: #ff1a1a;
+    }
+
+    /* Modal (Popup) Styling */
+    .modal {
+      display: none; /* Hidden by default */
+      position: fixed;
+      z-index: 1;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      overflow: auto;
+      background-color: rgba(0, 0, 0, 0.7); /* Black with opacity */
+      justify-content: center;
+      align-items: center;
+    }
+
+    .modal-content {
+      margin: auto;
+      display: block;
+      max-width: 90%;
+      max-height: 90%;
+    }
+
+    .modal-content img {
+      width: 100%;
       height: auto;
-      margin: 20px 0;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .close {
+      position: absolute;
+      top: 10px;
+      right: 25px;
+      color: #ffffff;
+      font-size: 30px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .close:hover,
+    .close:focus {
+      color: #f1f1f1;
     }
   </style>
   <script>
@@ -131,14 +181,14 @@
       link.click();
     }
 
-    // Function to enlarge the QRIS image
-    function enlargeQRIS() {
-      var img = document.getElementById('qris-img');
-      if (img.style.maxWidth === '200px') {
-        img.style.maxWidth = '500px'; // Enlarges the image
-      } else {
-        img.style.maxWidth = '200px'; // Resets the size
-      }
+    // Function to open the image in a modal (popup)
+    function openModal() {
+      document.getElementById('qrisModal').style.display = 'block';
+    }
+
+    // Function to close the modal
+    function closeModal() {
+      document.getElementById('qrisModal').style.display = 'none';
     }
   </script>
 </head>
@@ -203,11 +253,15 @@
     <!-- QRIS Section -->
     <div id="qris-section" class="qris-section">
       <h3>Scan QRIS untuk Pembayaran</h3>
-      <img src="https://pomf2.lain.la/f/kygm7jgp.png" alt="QRIS" id="qris-img" onclick="enlargeQRIS()">
-      <h2>Panel tidak akan di proses ketika owner tidak terima bukti !</h2>
+      <img src="https://pomf2.lain.la/f/kygm7jgp.png" alt="QRIS" id="qris-img">
       <a href="https://wa.me/18148012005" target="_blank">Kirim Bukti Pembayaran</a><br>
-      <button onclick="downloadQRIS()">Download QRIS</button>
+      <button onclick="downloadQRIS()">Download QRIS</button><br>
+      <a href="#" class="red-button">Red Button</a> <!-- New Red Button -->
     </div>
   </div>
-</body>
-</html>
+
+  <!-- Modal (Popup) -->
+  <div id="qrisModal" class="modal" onclick="closeModal()">
+    <span class="close">&times;</span>
+    <img class="modal-content" src="https://pomf2.lain.la/f/kygm7jgp.png" alt="QRIS">
+  </div>
