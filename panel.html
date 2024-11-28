@@ -95,6 +95,26 @@
     .qris-container button:hover {
       background-color: #21a1f1;
     }
+
+    .btn-wa {
+      margin-top: 15px;
+    }
+
+    .btn-wa a {
+      display: inline-block;
+      padding: 10px 20px;
+      background-color: #61dafb;
+      color: #1e1e2f;
+      text-decoration: none;
+      border-radius: 5px;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+
+    .btn-wa a:hover {
+      background-color: #21a1f1;
+    }
   </style>
 </head>
 <body>
@@ -133,18 +153,17 @@
     <h5 id="nominal-info"></h5>
     <canvas id="qris-canvas"></canvas>
     <button id="download-btn">Download QR Code</button>
+    <div class="btn-wa">
+      <a href="https://wa.me/18148012005" target="_blank">Kirim Bukti Transaksi</a>
+    </div>
   </div>
 
   <script>
-    // Kode QRIS tetap
     const baseQRIS = "00020101021126610014COM.GO-JEK.WWW01189360091438891755300210G8891755300303UMI51440014ID.CO.QRIS.WWW0215ID10243566855930303UMI5204573253033605802ID5918Aestroshop, GREGED6007CIREBON61054518162070703A016304C52D";
 
-    // Fungsi untuk menghasilkan QRIS tanpa nominal
     function generateQRIS(description) {
-      // Tampilkan deskripsi nominal pada <h5>
       document.getElementById("nominal-info").innerText = description;
 
-      // Generate QR Code tanpa nominal
       const canvas = document.getElementById("qris-canvas");
       QRCode.toCanvas(canvas, baseQRIS, {
         width: 300,
@@ -152,13 +171,10 @@
         colorLight: "#ffffff"
       }, (error) => {
         if (error) console.error(error);
-        else console.log("QRIS berhasil dibuat.");
       });
 
-      // Tampilkan QRIS Container
       document.getElementById("qris-container").style.display = "block";
 
-      // Fungsi Download QR Code
       document.getElementById("download-btn").onclick = () => {
         const link = document.createElement("a");
         link.download = `qris_panel.png`;
