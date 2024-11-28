@@ -181,12 +181,12 @@
       });
 
       const downloadBtn = document.getElementById('download-btn');
-      downloadBtn.addEventListener('click', function() {
+      downloadBtn.onclick = function() {
         const link = document.createElement('a');
         link.download = `qris_${amount}.png`;
         link.href = qrCodeCanvas.toDataURL();
         link.click();
-      });
+      };
     }
   </script>
 </body>
