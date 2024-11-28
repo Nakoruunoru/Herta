@@ -101,7 +101,9 @@
     }
 
     .btn-wa a {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
       padding: 10px 20px;
       background-color: #61dafb;
       color: #1e1e2f;
@@ -114,6 +116,11 @@
 
     .btn-wa a:hover {
       background-color: #21a1f1;
+    }
+
+    .btn-wa a i {
+      font-style: normal;
+      font-size: 18px;
     }
   </style>
 </head>
@@ -154,7 +161,9 @@
     <canvas id="qris-canvas"></canvas>
     <button id="download-btn">Download QR Code</button>
     <div class="btn-wa">
-      <a href="https://wa.me/18148012005" target="_blank">Kirim Bukti Transaksi</a>
+      <a href="https://wa.me/18148012005" target="_blank">
+        <i>✈️</i> Kirim Bukti Transaksi
+      </a>
     </div>
   </div>
 
