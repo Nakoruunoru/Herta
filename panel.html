@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>QRIS Viewer</title>
+  <title>Penjualan Panel dengan QRIS</title>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <style>
     body {
@@ -11,79 +11,180 @@
       font-family: Arial, sans-serif;
       background-color: #1e1e2f;
       color: #ffffff;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      height: 100vh;
       text-align: center;
     }
 
     .header {
-      margin-bottom: 20px;
+      background-color: #252526;
+      padding: 20px;
+      text-align: center;
+      position: sticky;
+      top: 0;
     }
 
-    .qris-container {
+    .header h1 {
+      color: #61dafb;
+      margin: 0;
+    }
+
+    .main {
+      padding: 20px;
+    }
+
+    .panel-list {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 20px;
+      gap: 10px;
     }
 
-    canvas {
+    .panel-item {
+      background-color: #2d2d3d;
+      padding: 15px;
+      border-radius: 8px;
+      width: 90%;
+      max-width: 400px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.5);
+    }
+
+    .panel-item span {
+      font-size: 18px;
+      color: #d4d4d4;
+    }
+
+    .panel-item button {
+      background-color: #61dafb;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      color: #1e1e2f;
+      transition: background-color 0.3s;
+    }
+
+    .panel-item button:hover {
+      background-color: #21a1f1;
+    }
+
+    .qris-container {
+      margin-top: 30px;
+      display: none;
+      text-align: center;
+    }
+
+    .qris-container canvas {
+      margin-top: 20px;
       border: 1px solid #fff;
       border-radius: 8px;
     }
 
-    button {
-      padding: 10px 20px;
+    .qris-container button {
+      margin-top: 10px;
       background-color: #61dafb;
-      color: #1e1e2f;
       border: none;
+      padding: 10px 20px;
       border-radius: 5px;
-      font-size: 16px;
       cursor: pointer;
-      transition: background-color 0.3s;
+      color: #1e1e2f;
+      font-size: 16px;
     }
 
-    button:hover {
+    .qris-container button:hover {
       background-color: #21a1f1;
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>QRIS Payment</h1>
-    <p>Scan QRIS untuk melakukan pembayaran</p>
+    <h1>Penjualan Panel</h1>
   </div>
 
-  <div class="qris-container">
+  <div class="main">
+    <h2>Pilih Panel</h2>
+    <div class="panel-list">
+      <div class="panel-item">
+        <span>1 GB Panel - Rp 1.000</span>
+        <button onclick="generateQRIS(1000)">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>2 GB Panel - Rp 2.000</span>
+        <button onclick="generateQRIS(2000)">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>3 GB Panel - Rp 3.000</span>
+        <button onclick="generateQRIS(3000)">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>4 GB Panel - Rp 4.000</span>
+        <button onclick="generateQRIS(4000)">Beli</button>
+      </div>
+      <div class="panel-item">
+        <span>5 GB Panel - Rp 5.000</span>
+        <button onclick="generateQRIS(5000)">Beli</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="qris-container" id="qris-container">
+    <h3>Scan QRIS untuk Pembayaran</h3>
     <canvas id="qris-canvas"></canvas>
     <button id="download-btn">Download QR Code</button>
   </div>
 
   <script>
-    // Kode QRIS yang diberikan
-    const qrisCode = "00020101021126610014COM.GO-JEK.WWW01189360091438891755300210G8891755300303UMI51440014ID.CO.QRIS.WWW0215ID10243566855930303UMI5204573253033605802ID5918Aestroshop, GREGED6007CIREBON61054518162070703A016304C52D";
+    // Kode QRIS dasar
+    const baseQRIS = "00020101021126610014COM.GO-JEK.WWW01189360091438891755300210G8891755300303UMI51440014ID.CO.QRIS.WWW0215ID10243566855930303UMI5204";
+    const fixedData = "53033605802ID5918Aestroshop, GREGED6007CIREBON61054518162070703A016304";
 
-    // Generate QR Code
-    const canvas = document.getElementById("qris-canvas");
-    QRCode.toCanvas(canvas, qrisCode, {
-      width: 300,
-      colorDark: "#000000",
-      colorLight: "#ffffff"
-    }, (error) => {
-      if (error) console.error(error);
-      else console.log("QRIS generated successfully");
-    });
+    // Fungsi untuk menghitung CRC16
+    function calculateCRC16(data) {
+      let crc = 0xFFFF;
+      for (let i = 0; i < data.length; i++) {
+        crc ^= data.charCodeAt(i) << 8;
+        for (let j = 0; j < 8; j++) {
+          if ((crc & 0x8000) !== 0) {
+            crc = (crc << 1) ^ 0x1021;
+          } else {
+            crc <<= 1;
+          }
+        }
+      }
+      crc &= 0xFFFF;
+      return crc.toString(16).toUpperCase().padStart(4, '0');
+    }
 
-    // Download QR Code as PNG
-    document.getElementById("download-btn").onclick = () => {
-      const link = document.createElement("a");
-      link.download = "qris_code.png";
-      link.href = canvas.toDataURL();
-      link.click();
-    };
+    // Fungsi untuk menghasilkan QRIS dengan nominal
+    function generateQRIS(amount) {
+      const nominal = `54${String(amount).length}${amount}`;
+      const qrisData = baseQRIS + nominal + fixedData;
+      const crc = calculateCRC16(qrisData);
+      const finalQRIS = qrisData + crc;
+
+      // Generate QR Code
+      const canvas = document.getElementById("qris-canvas");
+      QRCode.toCanvas(canvas, finalQRIS, {
+        width: 300,
+        colorDark: "#000000",
+        colorLight: "#ffffff"
+      }, (error) => {
+        if (error) console.error(error);
+        else console.log("QRIS berhasil dibuat.");
+      });
+
+      // Tampilkan QRIS Container
+      document.getElementById("qris-container").style.display = "block";
+
+      // Fungsi Download QR Code
+      document.getElementById("download-btn").onclick = () => {
+        const link = document.createElement("a");
+        link.download = `qris_${amount}.png`;
+        link.href = canvas.toDataURL();
+        link.click();
+      };
+    }
   </script>
 </body>
 </html>
