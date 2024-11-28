@@ -107,65 +107,46 @@
     <div class="panel-list">
       <div class="panel-item">
         <span>1 GB Panel - Rp 1.000</span>
-        <button onclick="generateQRIS(1000)">Beli</button>
+        <button onclick="generateQRIS('1 GB Panel - Rp 1.000')">Beli</button>
       </div>
       <div class="panel-item">
         <span>2 GB Panel - Rp 2.000</span>
-        <button onclick="generateQRIS(2000)">Beli</button>
+        <button onclick="generateQRIS('2 GB Panel - Rp 2.000')">Beli</button>
       </div>
       <div class="panel-item">
         <span>3 GB Panel - Rp 3.000</span>
-        <button onclick="generateQRIS(3000)">Beli</button>
+        <button onclick="generateQRIS('3 GB Panel - Rp 3.000')">Beli</button>
       </div>
       <div class="panel-item">
         <span>4 GB Panel - Rp 4.000</span>
-        <button onclick="generateQRIS(4000)">Beli</button>
+        <button onclick="generateQRIS('4 GB Panel - Rp 4.000')">Beli</button>
       </div>
       <div class="panel-item">
         <span>5 GB Panel - Rp 5.000</span>
-        <button onclick="generateQRIS(5000)">Beli</button>
+        <button onclick="generateQRIS('5 GB Panel - Rp 5.000')">Beli</button>
       </div>
     </div>
   </div>
 
   <div class="qris-container" id="qris-container">
     <h3>Scan QRIS untuk Pembayaran</h3>
+    <h5 id="nominal-info"></h5>
     <canvas id="qris-canvas"></canvas>
     <button id="download-btn">Download QR Code</button>
   </div>
 
   <script>
-    // Kode QRIS dasar
-    const baseQRIS = "00020101021126610014COM.GO-JEK.WWW01189360091438891755300210G8891755300303UMI51440014ID.CO.QRIS.WWW0215ID10243566855930303UMI5204";
-    const fixedData = "53033605802ID5918Aestroshop, GREGED6007CIREBON61054518162070703A016304";
+    // Kode QRIS tetap
+    const baseQRIS = "00020101021126610014COM.GO-JEK.WWW01189360091438891755300210G8891755300303UMI51440014ID.CO.QRIS.WWW0215ID10243566855930303UMI5204573253033605802ID5918Aestroshop, GREGED6007CIREBON61054518162070703A016304C52D";
 
-    // Fungsi untuk menghitung CRC16
-    function calculateCRC16(data) {
-      let crc = 0xFFFF;
-      for (let i = 0; i < data.length; i++) {
-        crc ^= data.charCodeAt(i) << 8;
-        for (let j = 0; j < 8; j++) {
-          if ((crc & 0x8000) !== 0) {
-            crc = (crc << 1) ^ 0x1021;
-          } else {
-            crc <<= 1;
-          }
-        }
-      }
-      crc &= 0xFFFF;
-      return crc.toString(16).toUpperCase().padStart(4, '0');
-    }
+    // Fungsi untuk menghasilkan QRIS tanpa nominal
+    function generateQRIS(description) {
+      // Tampilkan deskripsi nominal pada <h5>
+      document.getElementById("nominal-info").innerText = description;
 
-    // Fungsi untuk menghasilkan QRIS dengan nominal
-    function generateQRIS(amount) {
-      const nominal = `54${String(amount).length}${amount}`;
-      const qrisData = baseQRIS + nominal + fixedData;
-      const crc = calculateCRC16(qrisData);
-      const finalQRIS = qrisData + crc;
-
-      // Generate QR Code
+      // Generate QR Code tanpa nominal
       const canvas = document.getElementById("qris-canvas");
-      QRCode.toCanvas(canvas, finalQRIS, {
+      QRCode.toCanvas(canvas, baseQRIS, {
         width: 300,
         colorDark: "#000000",
         colorLight: "#ffffff"
@@ -180,7 +161,7 @@
       // Fungsi Download QR Code
       document.getElementById("download-btn").onclick = () => {
         const link = document.createElement("a");
-        link.download = `qris_${amount}.png`;
+        link.download = `qris_panel.png`;
         link.href = canvas.toDataURL();
         link.click();
       };
