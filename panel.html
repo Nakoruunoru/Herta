@@ -153,15 +153,6 @@
       return crc.toString(16).toUpperCase().padStart(4, '0');
     }
 
-    function generateQR(qrisData, paymentAmount) {
-      qrisData = qrisData.slice(0, -4);
-      const step1 = qrisData.replace("010211", "010212");
-      const uang = "54" + ("0" + paymentAmount.toString().length).slice(-2) + paymentAmount;
-      const completeData = step1 + uang + convertCRC16(step1 + uang);
-
-      return completeData;
-    }
-
     function showQRIS(amount) {
       const qrisData = '00020101021126610014COM.GO-JEK.WWW01189360091438891755300210G8891755300303UMI51440014ID.CO.QRIS.WWW0215ID10243566855930303UMI5204573253033605802ID5918Aestroshop, GREGED6007CIREBON61054518162070703A016304C52D';
       const qrCodeData = generateQR(qrisData, amount);
