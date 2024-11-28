@@ -3,182 +3,87 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Penjualan Panel</title>
+  <title>QRIS Viewer</title>
   <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
   <style>
     body {
       margin: 0;
-      font-family: 'Courier New', Courier, monospace;
+      font-family: Arial, sans-serif;
       background-color: #1e1e2f;
       color: #ffffff;
-    }
-
-    .header {
-      background-color: #252526;
-      padding: 20px;
-      text-align: center;
-      position: sticky;
-      top: 0;
-      z-index: 1000;
-    }
-
-    .header h1 {
-      color: #61dafb;
-      font-size: 36px;
-      margin: 0;
-    }
-
-    .main {
-      text-align: center;
-      margin: 20px;
-      padding: 20px;
-    }
-
-    .panel-list {
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 10px;
-    }
-
-    .panel-item {
-      width: 90%;
-      max-width: 500px;
-      background-color: #2d2d3d;
-      padding: 15px;
-      border-radius: 8px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .panel-item span {
-      font-size: 18px;
-      color: #d4d4d4;
-    }
-
-    .panel-item button {
-      padding: 8px 16px;
-      background-color: #61dafb;
-      color: #1e1e2f;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: 0.3s;
-    }
-
-    .panel-item button:hover {
-      background-color: #21a1f1;
-    }
-
-    .qris-section {
-      display: none;
+      justify-content: center;
+      height: 100vh;
       text-align: center;
-      margin-top: 30px;
     }
 
-    .qris-section canvas {
+    .header {
       margin-bottom: 20px;
     }
 
-    .qris-section button {
+    .qris-container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 20px;
+    }
+
+    canvas {
+      border: 1px solid #fff;
+      border-radius: 8px;
+    }
+
+    button {
       padding: 10px 20px;
       background-color: #61dafb;
       color: #1e1e2f;
-      text-decoration: none;
       border: none;
       border-radius: 5px;
-      transition: 0.3s;
+      font-size: 16px;
+      cursor: pointer;
+      transition: background-color 0.3s;
     }
 
-    .qris-section button:hover {
+    button:hover {
       background-color: #21a1f1;
     }
   </style>
 </head>
 <body>
   <div class="header">
-    <h1>Herta - Panel</h1>
+    <h1>QRIS Payment</h1>
+    <p>Scan QRIS untuk melakukan pembayaran</p>
   </div>
 
-  <div class="main">
-    <h2>List Panel</h2>
-
-    <div class="panel-list">
-      <!-- Panel Items -->
-      <div class="panel-item">
-        <span>1 GB Panel - Rp 1.000</span>
-        <button onclick="showQRIS(1000)">Beli</button>
-      </div>
-      <div class="panel-item">
-        <span>2 GB Panel - Rp 2.000</span>
-        <button onclick="showQRIS(2000)">Beli</button>
-      </div>
-      <div class="panel-item">
-        <span>3 GB Panel - Rp 3.000</span>
-        <button onclick="showQRIS(3000)">Beli</button>
-      </div>
-      <div class="panel-item">
-        <span>4 GB Panel - Rp 4.000</span>
-        <button onclick="showQRIS(4000)">Beli</button>
-      </div>
-      <div class="panel-item">
-        <span>Unlimited Panel - Rp 10.000</span>
-        <button onclick="showQRIS(10000)">Beli</button>
-      </div>
-    </div>
-
-    <div id="qris-section" class="qris-section">
-      <h3>Scan QRIS untuk Pembayaran</h3>
-      <canvas id="qrcode"></canvas>
-      <p id="qr-instruction"></p>
-      <button id="download-btn">Download QR Code</button>
-    </div>
+  <div class="qris-container">
+    <canvas id="qris-canvas"></canvas>
+    <button id="download-btn">Download QR Code</button>
   </div>
 
   <script>
-    function convertCRC16(str) {
-      let crc = 0xFFFF;
-      for (let i = 0; i < str.length; i++) {
-        crc ^= str.charCodeAt(i) << 8;
-        for (let j = 0; j < 8; j++) {
-          if ((crc & 0x8000) !== 0) {
-            crc = (crc << 1) ^ 0x1021;
-          } else {
-            crc <<= 1;
-          }
-        }
-      }
-      crc &= 0xFFFF;
-      return crc.toString(16).toUpperCase().padStart(4, '0');
-    }
+    // Kode QRIS yang diberikan
+    const qrisCode = "00020101021126610014COM.GO-JEK.WWW01189360091438891755300210G8891755300303UMI51440014ID.CO.QRIS.WWW0215ID10243566855930303UMI5204573253033605802ID5918Aestroshop, GREGED6007CIREBON61054518162070703A016304C52D";
 
-    function showQRIS(amount) {
-      const qrisData = '00020101021126610014COM.GO-JEK.WWW01189360091438891755300210G8891755300303UMI51440014ID.CO.QRIS.WWW0215ID10243566855930303UMI5204573253033605802ID5918Aestroshop, GREGED6007CIREBON61054518162070703A016304C52D';
-      const qrCodeData = generateQR(qrisData, amount);
+    // Generate QR Code
+    const canvas = document.getElementById("qris-canvas");
+    QRCode.toCanvas(canvas, qrisCode, {
+      width: 300,
+      colorDark: "#000000",
+      colorLight: "#ffffff"
+    }, (error) => {
+      if (error) console.error(error);
+      else console.log("QRIS generated successfully");
+    });
 
-      const qrCodeCanvas = document.getElementById('qrcode');
-      QRCode.toCanvas(qrCodeCanvas, qrCodeData, {
-        width: 256,
-        colorDark: "#000000",
-        colorLight: "#ffffff",
-      }, function (error) {
-        if (error) {
-          console.error(error);
-        } else {
-          document.getElementById('qris-section').style.display = 'block';
-          document.getElementById('qr-instruction').textContent = `Silahkan scan QRIS untuk pembayaran Rp ${amount}`;
-        }
-      });
-
-      const downloadBtn = document.getElementById('download-btn');
-      downloadBtn.onclick = function() {
-        const link = document.createElement('a');
-        link.download = `qris_${amount}.png`;
-        link.href = qrCodeCanvas.toDataURL();
-        link.click();
-      };
-    }
+    // Download QR Code as PNG
+    document.getElementById("download-btn").onclick = () => {
+      const link = document.createElement("a");
+      link.download = "qris_code.png";
+      link.href = canvas.toDataURL();
+      link.click();
+    };
   </script>
 </body>
 </html>
